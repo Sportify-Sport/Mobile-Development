@@ -17,15 +17,16 @@ This course focuses on developing modern mobile applications, covering both **Re
 
 ---
 
-## 🗂️ Repository Structure  
+## 🗂️ Repository Structure
 
+```
 📂 Mobile-Development
-├── 📁 Assignments # Weekly exercises
-├── 📁 Projects # Team and individual projects
-├── 📁 Notes # Lecture notes and resources
-├── 📁 Examples # Code examples from class
-└── README.md # This file
-
+├── 📁 Assignments  # Weekly exercises
+├── 📁 Projects    # Team and individual projects
+├── 📁 Notes      # Lecture notes and resources
+├── 📁 Examples   # Code examples from class
+└── 📄 README.md  # This file
+```
 
 ---
 
@@ -42,12 +43,16 @@ This course focuses on developing modern mobile applications, covering both **Re
 ## 📝 Assignments  
 Assignments will help reinforce concepts taught in class. There are seven exercises, contributing 20% to the overall grade.  
 
-| Week | Topic                             | Assignment |  
-|------|-----------------------------------|------------|  
-| 1    | JS + TS Fundamentals, React Setup | Ex1        |  
-| 2    | Components, Props, State          | Ex2        |  
-| 3    | Lifecycle, Lists, Forms           | Ex3        |  
-| ...  | ...                               | ...        |  
+```
+📁 Assignments
+├── 📁 Assignment1  # JS + TS Fundamentals
+├── 📁 Assignment2  # Components, State, and Events
+├── 📁 Assignment3  # Hooks
+├── 📁 Assignment4  # React Router and PropTypes
+├── 📁 Assignment5  # Context
+├── 📁 Assignment6  # Server and Fetch calls
+└── 📁 Assignment7  # React Native Features
+```
 
 ---
 
