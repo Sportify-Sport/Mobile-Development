@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Duck</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+      }
+
+      form {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 10px;
+      }
+
+      button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+
+      #actionButtons {
+        display: none;
+        margin-top: 20px;
+      }
+      
+      #duckInfo {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="duckForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="color">Color:</label>
+        <input type="color" id="color" required />
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input type="number" id="age" min="0" required />
+      </div>
+
+      <div class="form-group">
+        <label for="weight">Weight:</label>
+        <input type="number" id="weight" min="0" step="0.1" required />
+      </div>
+
+      <div class="form-group">
+        <label for="image">Image link:</label>
+        <input type="url" id="image" required />
+      </div>
+
+      <button type="submit" id="createDuck">Create Duck</button>
+    </form>
+
+    <div id="actionButtons">
+      <button onclick="currentDuck.Show()">Show</button>
+      <button onclick="currentDuck.Quack()">Quack</button>
+    </div>
+
+    <div id="duckInfo"></div>
+    <script>
+      class Duck {
+        constructor(name, color, age, weight, image) {
+          this.name = name;
+          this.color = color;
+          this.age = age;
+          this.weight = weight;
+          this.image = image;
+        }
+
+        Show() {
+          const duckInfo = document.getElementById("duckInfo");
+          duckInfo.innerHTML = `<p>Name: ${this.name}</p>
+                <p>Color: ${this.color}</p>
+                <p>Age: ${this.age}</p>
+                <p>Weight ${this.weight}</p>
+                <img src="${this.image}" alt="Duck photo" style="max-width: 200px;"> 
+               `;
+        }
+
+        Quack() {
+          const duckInfo = document.getElementById("duckInfo");
+          let quacksNum = Math.floor((this.age * this.weight) / 2);
+          let quacksTxt = "";
+          for (let i = 0; i < quacksNum; i++) {
+            quacksTxt += "Quack ";
+          }
+          quacksTxt = quacksTxt.trim();
+          duckInfo.innerHTML = `<p>${quacksTxt}</p>`;
+
+          const quackSpeech = `Quack I am ${this.name}`;
+          let speakCount = 0;
+
+          function speak() {
+            if (speakCount < 3) {
+              const utterance = new SpeechSynthesisUtterance(quackSpeech);
+              utterance.onend = () => {
+                speakCount++;
+                if (speakCount < 3) {
+                  setTimeout(speak, 500);
+                }
+              };
+              speechSynthesis.speak(utterance);
+            }
+          }
+
+          speak();
+        }
+      }
+
+      let currentDuck = null;
+
+      document.getElementById("duckForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          let dName = document.getElementById("name").value;
+          let dColor = document.getElementById("color").value;
+          let dAge = Number(document.getElementById("age").value);
+          let dWeight = Number(document.getElementById("weight").value);
+          let dImage = document.getElementById("image").value;
+
+          currentDuck = new Duck(dName, dColor, dAge, dWeight, dImage);
+
+          document.getElementById("actionButtons").style.display = "block";
+          document.getElementById("createDuck").disabled = true;
+        });
+      document;
+    </script>
+  </body>
+</html>

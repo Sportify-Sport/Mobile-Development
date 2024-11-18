@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter Application</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            direction: rtl; 
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        button {
+            width: 30%;
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            button.start {
+                background-color: #28a745;
+            }
+
+            button.increment {
+                background-color: #007bff;
+            }
+
+            button.go {
+                background-color: #ffc107;
+            }
+
+            button:hover {
+                opacity: 0.9;
+            }
+
+        p {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Exersice1, Q1</h2>
+        <input type="number" id="counterInput" placeholder="הזן מספר התחלתי">
+        <div>
+            <button class="start" onclick="initializeCounter()">Start</button>
+            <button class="increment" onclick="incrementCounter()">+</button>
+            <button class="go" onclick="displayCounter()">Go</button>
+        </div>
+        <p id="output"></p>
+    </div>
+    <script>
+        class Counter {
+            constructor() {
+                this.value = 0;
+            }
+
+            initialize(value) {
+                this.value = parseInt(value, 10) || 0;
+            }
+
+            increment() {
+                this.value += 1;
+            }
+
+
+            go() {
+                const numbers = [];
+                if (this.value >= 0) {
+                    for (let i = 0; i <= this.value; i++) {
+                        numbers.push(i);
+                    }
+                } else {
+                    for (let i = 0; i >= this.value; i--) {
+                        numbers.push(i);
+                    }
+                }
+                return numbers.join(', ');
+            }
+        }
+
+        const counter = new Counter();
+
+        function initializeCounter() {
+            const inputValue = document.getElementById("counterInput").value;
+            counter.initialize(inputValue);
+            document.getElementById("output").textContent = `המונה אותחל לערך: ${counter.value}`;
+        }
+
+        function incrementCounter() {
+            counter.increment();
+            document.getElementById("counterInput").value = counter.value;
+        }
+
+        function displayCounter() {
+            const result = counter.go();
+            document.getElementById("output").textContent = `המספרים: ${result}`;
+        }
+    </script>
+</body>
+</html>
+
