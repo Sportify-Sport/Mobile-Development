@@ -25,10 +25,13 @@ function Profile(props) {
   }, []);
 
   const logoutUser = () => {
-    sessionStorage.removeItem("currentUser");
-    setProfileData(null);
-    navigate("/login");
-  };
+    const confirmation = window.confirm("Are you sure you want to log out?");
+    if (confirmation) {
+      sessionStorage.removeItem("currentUser");
+      setProfileData(null);
+      navigate("/login");
+    }
+  };  
 
   const handleGameRedirect = () => {
     window.open("https://www.friv.com/z/games/bloxorz/game.html", "_blank");
@@ -43,6 +46,9 @@ function Profile(props) {
     card: {
       direction: "rtl",
     },
+    marg: {
+      marginBottom: "10px"
+    }
   };
 
   if (!profileData) {
@@ -64,18 +70,18 @@ function Profile(props) {
 
         <p>{profileData.email} 📧</p>
 
-        <p>{`${profileData.street}, ${profileData.city}`}📍</p>
+        <p>{`${profileData.street} ${profileData.number}, ${profileData.city}`}📍</p>
 
         <p>{profileData.birthDate} 🎂</p>
       </div>
 
-      <button className="btn btn-danger" onClick={logoutUser}>
-        התנתק
-      </button>
-      <button className="btn btn-primary" onClick={handleGameRedirect}>
+      <button style={styles.marg} className="btn btn-primary" onClick={handleGameRedirect}>
         למשחק
       </button>
-      <button className="btn btn-secondary">עדכון פרטים</button>
+      <button style={styles.marg} className="btn btn-secondary">עדכון פרטים</button>
+      <button style={styles.marg} className="btn btn-danger" onClick={logoutUser}>
+        התנתק
+      </button>
     </>
   );
 }
