@@ -18,6 +18,10 @@ export default function Login(props) {
     }
   }, [navigate]);
 
+  const handleRegisterClick = () => {
+    navigate("/register");
+  };
+
   // Handle form submission
   const handleLogin = () => {
     // Check if both email and password fields are filled
@@ -76,6 +80,7 @@ export default function Login(props) {
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 
         <button onClick={handleLogin} className="login-button">Login</button>
+        <span>Don't have a user? <a onClick={handleRegisterClick} className="link"> Register now!</a></span>
       </div>
     </div>
   );

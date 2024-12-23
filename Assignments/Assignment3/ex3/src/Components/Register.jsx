@@ -16,6 +16,10 @@ const Register = () => {
     number: '',
   });
 
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
   const [errors, setErrors] = useState({});
   const [isRegistered, setIsRegistered] = useState(false);
   const [citySuggestions, setCitySuggestions] = useState([]);
@@ -310,7 +314,7 @@ const Register = () => {
         </div>
       ))}
       <button onClick={handleRegister}>Register</button>
-      <span>Already have a user?<a> log in!</a></span>
+      <span>Already have a user?<a onClick={handleLoginClick} className="link"> log in!</a></span>
     </div>
   );
 };

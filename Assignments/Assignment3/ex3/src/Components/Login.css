@@ -61,3 +61,14 @@
     text-align: center;
     margin-top: 10px;
   }  
+
+.link {
+  color: blue;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: lightblue;
+  text-decoration: underline; 
+}
