@@ -7,7 +7,7 @@ export default function Root(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedData = sessionStorage.getItem("profileData");
+    const storedData = sessionStorage.getItem("currentUser");
     if (storedData) {
       setIsLoggedIn(true);
     }
@@ -18,17 +18,17 @@ export default function Root(props) {
   };
 
   return (
-    // <div>
-    //   {!isLoggedIn ? (
-    //     <div>
-    //       <p>יש להתחבר למערכת</p>
-    //       <button onClick={handleLoginRedirect}>התחבר</button>
-    //     </div>
-    //   ) : (
+    <div>
+      {!isLoggedIn ? (
         <div>
-          <Profile /> {/* If logged in, show the Profile component */}
+          <p>יש להתחבר למערכת</p>
+          <button onClick={handleLoginRedirect}>התחבר</button>
         </div>
-    //   )}
-    // </div>
+      ) : (
+        <div>
+          <Profile />
+        </div>
+      )}
+    </div>
   );
 }

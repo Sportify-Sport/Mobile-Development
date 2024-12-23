@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Profile(props) {
-  // const [profileData, setProfileData] = useState(null);
+  const [profileData, setProfileData] = useState(null);
   const navigate = useNavigate();
   // const [profileData, setProfileData] = useState({
   //   birthDate: "2024-12-11",
@@ -18,18 +18,21 @@ function Profile(props) {
   // });
 
   useEffect(() => {
-    const storedData = sessionStorage.getItem("profileData");
+    const storedData = sessionStorage.getItem("currentUser");
     if (storedData) {
       setProfileData(JSON.parse(storedData));
     }
   }, []);
 
   const logoutUser = () => {
-    sessionStorage.removeItem("profileData");
+    sessionStorage.removeItem("currentUser");
     setProfileData(null);
     navigate("/login");
   };
-  
+
+  const handleGameRedirect = () => {
+    window.open("https://www.friv.com/z/games/bloxorz/game.html", "_blank");
+  };
 
   const styles = {
     avatar: {
@@ -41,6 +44,10 @@ function Profile(props) {
       direction: "rtl",
     },
   };
+
+  if (!profileData) {
+    return <p>יש להתחבר למערכת</p>;
+  }
 
   return (
     <>
@@ -62,8 +69,12 @@ function Profile(props) {
         <p>{profileData.birthDate} 🎂</p>
       </div>
 
-      <button className="btn btn-danger" onClick={logoutUser}>התנתק</button>
-      <button className="btn btn-primary">למשחק</button>
+      <button className="btn btn-danger" onClick={logoutUser}>
+        התנתק
+      </button>
+      <button className="btn btn-primary" onClick={handleGameRedirect}>
+        למשחק
+      </button>
       <button className="btn btn-secondary">עדכון פרטים</button>
     </>
   );
