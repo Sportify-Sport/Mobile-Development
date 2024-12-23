@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom";
 function Profile(props) {
   // const [profileData, setProfileData] = useState(null);
   const navigate = useNavigate();
-  const [profileData, setProfileData] = useState({
-    birthDate: "2024-12-11",
-    city: "Kafr Qara",
-    email: "u12@gmail.com",
-    firstName: "Alaa",
-    image: "imageURL_or_placeholder",
-    lastName: "Ada",
-    number: "103",
-    password: "hashedPassword",
-    street: "ח",
-    username: "ad5",
-  });
+  // const [profileData, setProfileData] = useState({
+  //   birthDate: "2024-12-11",
+  //   city: "Kafr Qara",
+  //   email: "u12@gmail.com",
+  //   firstName: "Alaa",
+  //   image: "imageURL_or_placeholder",
+  //   lastName: "Ada",
+  //   number: "103",
+  //   password: "hashedPassword",
+  //   street: "ח",
+  //   username: "ad5",
+  // });
 
   useEffect(() => {
     const storedData = sessionStorage.getItem("profileData");
