@@ -61,7 +61,7 @@ const Register = () => {
       });
       setErrors({});
     }
-  }, [isRegistered]); // Runs when isRegistered changes to true
+  }, [isRegistered]);
 
   useEffect(() => {
     if (formData.city) {
@@ -71,7 +71,7 @@ const Register = () => {
       if (cityExists) {
         setErrors((prevErrors) => {
           const newErrors = { ...prevErrors };
-          delete newErrors.city; // Remove the city error if the city is valid
+          delete newErrors.city;
           return newErrors;
         });
       }
@@ -195,7 +195,6 @@ const Register = () => {
       validate(name, value);
     }
 
-    // Handle city input change
     if (name === 'city') {
       const filteredCities = citiesList.filter(
         (city) =>
@@ -207,7 +206,7 @@ const Register = () => {
 
   const handleCitySelect = (city) => {
     setFormData({ ...formData, city: city.english });
-    setCitySuggestions([]); // Close the city suggestions list
+    setCitySuggestions([]);
   };
 
   const handleRegister = () => {
@@ -233,16 +232,14 @@ const Register = () => {
       return;
     }
 
-    // Create a new user object without the confirmPassword field
     const newUser = { ...formData };
-    delete newUser.confirmPassword; // Remove confirmPassword before storing
+    delete newUser.confirmPassword;
 
-    // Add the new user to the users array
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
 
     alert('Registration successful!');
-    setIsRegistered(true); // Mark registration as successful
+    setIsRegistered(true);
   };
 
   return (
