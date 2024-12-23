@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './registerCss.css';
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +16,8 @@ const Register = () => {
     street: '',
     number: '',
   });
-
+  
+  const navigate = useNavigate();
   const handleLoginClick = () => {
     navigate("/login");
   };
