@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function Profile(props) {
   // const [profileData, setProfileData] = useState(null);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     birthDate: "2024-12-11",
     city: "Kafr Qara",
@@ -27,7 +27,9 @@ function Profile(props) {
   const logoutUser = () => {
     sessionStorage.removeItem("profileData");
     setProfileData(null);
+    navigate("/login");
   };
+  
 
   const styles = {
     avatar: {
@@ -51,7 +53,7 @@ function Profile(props) {
           />
         </div>
 
-        <h5><h5>{`${profileData.firstName} ${profileData.lastName}`}</h5></h5>
+        <h5>{`${profileData.firstName} ${profileData.lastName}`}</h5>
 
         <p>{profileData.email} 📧</p>
 
