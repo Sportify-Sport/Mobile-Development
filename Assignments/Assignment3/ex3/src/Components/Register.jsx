@@ -140,7 +140,7 @@ const Register = () => {
       case 'birthDate':
         const today = new Date();
         const selectedDate = new Date(value);
-        const age = today.getFullYear() - selectedDate.getFullYear();
+        let age = today.getFullYear() - selectedDate.getFullYear();
         const month = today.getMonth() - selectedDate.getMonth();
         if (month < 0 || (month === 0 && today.getDate() < selectedDate.getDate())) {
           age--;
@@ -193,8 +193,14 @@ const Register = () => {
     if (type === 'file') {
       const file = files[0];
       if (file) {
-        const imageUrl = URL.createObjectURL(file);
-        setFormData({ ...formData, image: imageUrl });
+        const fileType = file.type.toLowerCase();
+        if (fileType === 'image/jpeg' || fileType === 'image/jpg') {
+          const imageUrl = URL.createObjectURL(file);
+          setFormData({ ...formData, image: imageUrl });
+        } else {
+          alert('Please upload a valid image (jpg/jpeg).');
+          e.target.value = null;
+        }
       }
     } else {
       setFormData({ ...formData, [name]: value });
@@ -246,6 +252,10 @@ const Register = () => {
 
     alert('Registration successful!');
     setIsRegistered(true);
+
+    sessionStorage.setItem('currentUser', JSON.stringify(newUser));
+
+    navigate("/");
   };
 
   return (
