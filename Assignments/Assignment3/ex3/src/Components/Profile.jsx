@@ -36,18 +36,21 @@ function Profile(props) {
       direction: "rtl",
     },
     marg: {
-      marginBottom: "10px"
-    }
+      marginBottom: "10px",
+      width: "200px",
+      display: "block",
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
+    buttonContainer: {
+      textAlign: "center",
+    },
   };
   
   if (!profileData) {
     return <p>יש להתחבר למערכת</p>
   }
 
-
-  // const editUser = () => {
-  //   return 
-  // }
   return (
     <>
       <div>

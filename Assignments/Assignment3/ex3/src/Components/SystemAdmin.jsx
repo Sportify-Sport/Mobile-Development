@@ -28,9 +28,6 @@ const UserTable = () => {
     
     <div className="container mt-5">
 
-        <div><button >fbvbs</button></div>
-
-
       <h3 className="mb-4">System Admin User Management</h3>
 
       <table className="table table-bordered table-hover">
@@ -49,9 +46,9 @@ const UserTable = () => {
             users.map((user, index) => (
               <tr key={index}>
                 <td>{user.username}</td>
-                <td>{user.fullname}</td>
-                <td>{user.dob}</td>
-                <td>{user.address}</td>
+                <td>{user.firstName} {user.lastName}</td>
+                <td>{user.birthDate}</td>
+                <td>{user.city}, {user.street} {user.number}</td>
                 <td>{user.email}</td>
                 <td>
                 <button className="btn btn-primary btn-sm me-2">
