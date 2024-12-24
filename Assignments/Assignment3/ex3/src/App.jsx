@@ -3,7 +3,7 @@ import "./App.css";
 import Profile from "./Components/Profile";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./Components/Root";
-import Login from "./Components/LogIn"; // Import Login component
+import Login from "./Components/Login";
 import Register from "./Components/Register";
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
 
   return (
     <div>
-      <RouterProvider router={router} />  {/* Render the router provider */}
+      <RouterProvider router={router} />
     </div>
   );
 }

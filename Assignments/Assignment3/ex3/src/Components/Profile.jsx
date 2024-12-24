@@ -1,21 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserTable from './SystemAdmin';
 
 function Profile(props) {
   const [profileData, setProfileData] = useState(null);
   const navigate = useNavigate();
-  // const [profileData, setProfileData] = useState({
-  //   birthDate: "2024-12-11",
-  //   city: "Kafr Qara",
-  //   email: "u12@gmail.com",
-  //   firstName: "Alaa",
-  //   image: "imageURL_or_placeholder",
-  //   lastName: "Ada",
-  //   number: "103",
-  //   password: "hashedPassword",
-  //   street: "ח",
-  //   username: "ad5",
-  // });
 
   useEffect(() => {
     const storedData = sessionStorage.getItem("currentUser");
@@ -50,17 +39,21 @@ function Profile(props) {
       marginBottom: "10px"
     }
   };
-
+  
   if (!profileData) {
-    return <p>יש להתחבר למערכת</p>;
+    return <p>יש להתחבר למערכת</p>
   }
 
+
+  // const editUser = () => {
+  //   return 
+  // }
   return (
     <>
       <div>
         <div>
           <img
-            src="https://via.placeholder.com/100"
+            src={profileData.image}
             alt="Profile Avatar"
             style={styles.avatar}
           />
@@ -82,6 +75,8 @@ function Profile(props) {
       <button style={styles.marg} className="btn btn-danger" onClick={logoutUser}>
         התנתק
       </button>
+
+      {profileData.username === "admin" && <UserTable />}
     </>
   );
 }

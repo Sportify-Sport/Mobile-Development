@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Hook to navigate to different pages
-import "./Login.css"; // Add your previous styles here
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate(); // To navigate after successful login
+  const navigate = useNavigate();
 
-  // Check if a user is already logged in from sessionStorage when component mounts
   useEffect(() => {
     const currentUser = sessionStorage.getItem("currentUser");
     if (currentUser) {
@@ -22,30 +21,24 @@ export default function Login(props) {
     navigate("/register");
   };
 
-  // Handle form submission
   const handleLogin = () => {
-    // Check if both email and password fields are filled
     if (!email || !password) {
       setErrorMessage("Both fields are required!");
       return;
     }
 
-    // Get users from localStorage
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    // Find a user with matching email and password
     const user = users.find(
       (u) => u.email === email && u.password === password
     );
 
-    // If user exists, save to sessionStorage and navigate to profile page
     if (user) {
-      sessionStorage.setItem("currentUser", JSON.stringify(user)); // Save current user in sessionStorage
-      setErrorMessage(""); // Clear error message
+      sessionStorage.setItem("currentUser", JSON.stringify(user));
+      setErrorMessage("");
 
-      alert("Login successful!"); // Notify the user of successful login
+      alert("Login successful!");
 
-      // Navigate to the profile page (you can replace "/" with your actual route)
       navigate("/");
     } else {
       setErrorMessage("Incorrect email or password. Please try again.");
