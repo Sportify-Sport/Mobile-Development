@@ -8,15 +8,15 @@ export default function Root(props) {
 
 
   const adminUser = {
-    birthDate: "2024-12-11",
-    city: "Kafr Qara",
+    birthDate: "2000-12-11",
+    city: "Netanya",
     email: "admin@gmail.com",
     firstName: "Admin",
-    image: "imageURL_or_placeholder",
+    image: "https://png.pngtree.com/png-vector/20190629/ourmid/pngtree-office-work-user-icon-avatar-png-image_1527655.jpg",
     lastName: "User",
-    number: "103",
+    number: "9",
     password: "ad12343211ad",
-    street: "ח",
+    street: "שוהם",
     username: "admin",
   };
 
