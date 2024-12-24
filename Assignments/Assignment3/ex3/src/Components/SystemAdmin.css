@@ -8,3 +8,9 @@ td{
   font-family: 'Times New Roman', Times, serif;
   font-size:medium;
 }
+button{
+  margin-bottom:5px;
+}
+.pad{
+  padding:5px;
+}

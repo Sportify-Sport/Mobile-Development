@@ -30,7 +30,7 @@ export default function Login(props) {
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
     const user = users.find(
-      (u) => u.email === email && u.password === password
+      (u) => (u.email === email && u.password === password) || (u.username === email && u.password === password)
     );
 
     if (user) {
