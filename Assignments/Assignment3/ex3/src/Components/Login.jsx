@@ -11,7 +11,7 @@ export default function Login(props) {
   useEffect(() => {
     const currentUser = sessionStorage.getItem("currentUser");
     if (currentUser) {
-      alert("You already signed in! You need to logout before trying to log in to another account.");
+      alert("כבר התחברת! עליך להתנתק לפני שתוכל לנסות להתחבר לחשבון אחר.");
   
       navigate("/"); 
     }
@@ -23,7 +23,7 @@ export default function Login(props) {
 
   const handleLogin = () => {
     if (!email || !password) {
-      setErrorMessage("Both fields are required!");
+      setErrorMessage("שני השדות נדרשים!");
       return;
     }
 
@@ -37,43 +37,43 @@ export default function Login(props) {
       sessionStorage.setItem("currentUser", JSON.stringify(user));
       setErrorMessage("");
 
-      alert("Login successful!");
+      alert("ההתחברות בוצעה בהצלחה!");
 
       navigate("/");
     } else {
-      setErrorMessage("Incorrect email or password. Please try again.");
+      setErrorMessage("דואל או סיסמה שגויים. אנא נסה שוב. ");
     }
   };
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2>הרשמה</h2>
       
       <div className="form-container">
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">דוא"ל</label>
         <input
           type="email"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          placeholder="Enter your email"
+          placeholder="הכנס את הדואל שלך"
         />
 
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">סיסמה</label>
         <input
           type="password"
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          placeholder="Enter your password"
+          placeholder="הכנס את הסיסמה שלך"
         />
 
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-        <button onClick={handleLogin} className="login-button">Login</button>
-        <span>Don't have a user? <a onClick={handleRegisterClick} className="link"> Register now!</a></span>
+        <button onClick={handleLogin} className="login-button">התחבר</button>
+        <span>אין לך משתמש? <a onClick={handleRegisterClick} className="link"> הירשם עכשיו!</a></span>
       </div>
     </div>
   );

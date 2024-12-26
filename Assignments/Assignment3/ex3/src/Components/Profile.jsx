@@ -20,7 +20,7 @@ function Profile(props) {
   }, [refresh]); 
 
   const logoutUser = () => {
-    const confirmation = window.confirm("Are you sure you want to log out?");
+    const confirmation = window.confirm("האם אתה בטוח שברצונך להתנתק?");
     if (confirmation) {
       sessionStorage.removeItem("currentUser");
       setProfileData(null);
@@ -33,14 +33,14 @@ function Profile(props) {
     const user = users.find((user) => user.email === profileData.email);
     if (user) {
       if (user.password !== enteredPassword || enteredPassword === " ") {
-        setPasswordError("Incorrect password. Please try again.");
+        setPasswordError("סיסמה שגויה. אנא נסה שוב.");
       } else {
         setShowPasswordModal(false); 
         setShowEditModal(true); 
         setPasswordError(""); 
       }
     } else {
-      setPasswordError("User not found. Please try again.");
+      setPasswordError("המשתמש לא נמצא. אנא נסה שוב.");
     }
   };
 
@@ -52,7 +52,7 @@ function Profile(props) {
       if (updatedData.password.trim() === "") {
         updatedData.password = user.password; 
       } else if (user.password === updatedData.password) {
-        alert("Please choose a different password from the current one.");
+        alert("אנא בחר סיסמה שונה מהסיסמה הנוכחית.");
         return;
       }
     }
@@ -79,9 +79,9 @@ function Profile(props) {
     setRefresh(!refresh);
   
     if (counter === 1) {
-      alert("Password updated successfully!");
+      alert("הסיסמה עודכנה בהצלחה!");
     } else {
-      alert("Details updated successfully!");
+      alert("הפרטים עודכנו בהצלחה!");
     }
   };
   
@@ -157,7 +157,7 @@ function Profile(props) {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Verify Password</h5>
+                <h5 className="modal-title">אמת סיסמה</h5>
                 <button
                   type="button"
                   className="btn-close"
@@ -165,7 +165,7 @@ function Profile(props) {
                 />
               </div>
               <div className="modal-body">
-                <p>Enter your current password to proceed:</p>
+                <p>הכנס את הסיסמה הנוכחית שלך כדי להמשיך:</p>
                 <input
                   type="password"
                   className="form-control"
@@ -181,14 +181,14 @@ function Profile(props) {
                   className="btn btn-secondary"
                   onClick={() => setShowPasswordModal(false)}
                 >
-                  Cancel
+                  ביטול
                 </button>
                 <button
                   type="button"
                   className="btn btn-primary"
                   onClick={handlePasswordCheck}
                 >
-                  Verify
+                  אמת
                 </button>
               </div>
             </div>
@@ -196,7 +196,6 @@ function Profile(props) {
         </div>
       )}
 
-      {/* EditDetails Modal */}
       {showEditModal && (
         <div
           className="modal fade show"

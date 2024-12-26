@@ -10,31 +10,32 @@ const EditDetails = ({ userData, editUser, mode }) => {
     confirmPasswordError: "",
     dobError: "",
     imageError: "",
+    cityError: "",
   });
   const [citySuggestions, setCitySuggestions] = useState([]);
 
   const citiesList = [
-    { hebrew: 'תל אביב', english: 'Tel Aviv' },
-    { hebrew: 'ירושלים', english: 'Jerusalem' },
-    { hebrew: 'חיפה', english: 'Haifa' },
-    { hebrew: 'באר שבע', english: "Be'er Sheva" },
-    { hebrew: 'נתניה', english: 'Netanya' },
-    { hebrew: 'אשדוד', english: 'Ashdod' },
-    { hebrew: 'רמת גן', english: 'Ramat Gan' },
-    { hebrew: 'עכו', english: 'Acre' },
-    { hebrew: 'הוד השרון', english: 'Hod Hasharon' },
-    { hebrew: 'הרצליה', english: 'Herzliya' },
-    { hebrew: 'חולון', english: 'Holon' },
-    { hebrew: 'כפר סבא', english: 'Kfar Saba' },
-    { hebrew: 'מודיעין', english: 'Modiin' },
-    { hebrew: 'אשקלון', english: 'Ashkelon' },
-    { hebrew: 'פתח תקווה', english: 'Petah Tikva' },
-    { hebrew: 'חדרה', english: 'Hadera' },
-    { hebrew: 'רחובות', english: 'Rehovot' },
-    { hebrew: 'טבריה', english: 'Tiberias' },
-    { hebrew: 'כפר קרע', english: 'Kafr Qara' },
-    { hebrew: 'גת', english: 'Jatt' },
-    { hebrew: 'עפולה', english: 'Afula' },
+    { hebrew: "תל אביב", english: "Tel Aviv" },
+    { hebrew: "ירושלים", english: "Jerusalem" },
+    { hebrew: "חיפה", english: "Haifa" },
+    { hebrew: "באר שבע", english: "Be'er Sheva" },
+    { hebrew: "נתניה", english: "Netanya" },
+    { hebrew: "אשדוד", english: "Ashdod" },
+    { hebrew: "רמת גן", english: "Ramat Gan" },
+    { hebrew: "עכו", english: "Acre" },
+    { hebrew: "הוד השרון", english: "Hod Hasharon" },
+    { hebrew: "הרצליה", english: "Herzliya" },
+    { hebrew: "חולון", english: "Holon" },
+    { hebrew: "כפר סבא", english: "Kfar Saba" },
+    { hebrew: "מודיעין", english: "Modiin" },
+    { hebrew: "אשקלון", english: "Ashkelon" },
+    { hebrew: "פתח תקווה", english: "Petah Tikva" },
+    { hebrew: "חדרה", english: "Hadera" },
+    { hebrew: "רחובות", english: "Rehovot" },
+    { hebrew: "טבריה", english: "Tiberias" },
+    { hebrew: "כפר קרע", english: "Kafr Qara" },
+    { hebrew: "גת", english: "Jatt" },
+    { hebrew: "עפולה", english: "Afula" },
   ];
 
   const handleChange = (e) => {
@@ -51,7 +52,7 @@ const EditDetails = ({ userData, editUser, mode }) => {
         } else {
           setErrors((prevErrors) => ({
             ...prevErrors,
-            imageError: "Please upload a valid image (jpg/jpeg).",
+            imageError: " אנא העלה תמונה תקינה (jpg/jpeg).",
           }));
           e.target.value = null;
         }
@@ -102,7 +103,7 @@ const EditDetails = ({ userData, editUser, mode }) => {
     if (!/^[\u0590-\u05FF\s]+$/.test(value)) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        streetError: "Street name must be in Hebrew letters.",
+        streetError: "שם הרחוב חייב להיות באותיות עבריות.",
       }));
     } else {
       setErrors((prevErrors) => ({
@@ -112,41 +113,39 @@ const EditDetails = ({ userData, editUser, mode }) => {
     }
   };
 
-  const validateFirstName = (value => {
+  const validateFirstName = (value) => {
     if (!/^[a-zA-Z\u0590-\u05FF\s]+$/.test(value)) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        firstNameError: "Only letters (English or Hebrew) are allowed.",
+        firstNameError: "רק אותיות (אנגלית או עברית) מותרות.",
       }));
-    }
-    else {
+    } else {
       setErrors((prevErrors) => ({
         ...prevErrors,
         firstNameError: "",
       }));
     }
-  })
+  };
 
-  const validateLastName = (value => {
+  const validateLastName = (value) => {
     if (!/^[a-zA-Z\u0590-\u05FF\s]+$/.test(value)) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        lastNameError: "Only letters (English or Hebrew) are allowed.",
+        lastNameError: "רק אותיות (אנגלית או עברית) מותרות.",
       }));
-    }
-    else {
+    } else {
       setErrors((prevErrors) => ({
         ...prevErrors,
         lastNameError: "",
       }));
     }
-  })
+  };
 
   const validateNumber = (value) => {
     if (!/^[1-9]\d*$/.test(value)) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        numberError: "Must be a positive number greater than 0.",
+        numberError: "חייב להיות מספר חיובי גדול מ-0.",
       }));
     } else {
       setErrors((prevErrors) => ({
@@ -157,10 +156,16 @@ const EditDetails = ({ userData, editUser, mode }) => {
   };
 
   const validateImage = (value) => {
-    if (value && !(/\.(jpg|jpeg)$/i.test(value) || /^https?:\/\/.*\.(jpg|jpeg)$/i.test(value))) {
+    if (
+      value &&
+      !(
+        /\.(jpg|jpeg)$/i.test(value) ||
+        /^https?:\/\/.*\.(jpg|jpeg)$/i.test(value)
+      )
+    ) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        imageError: "Image type must be jpg or jpeg!",
+        imageError: "סוג התמונה חייב להיות jpg או jpeg!",
       }));
     } else {
       setErrors((prevErrors) => ({
@@ -172,11 +177,16 @@ const EditDetails = ({ userData, editUser, mode }) => {
 
   const validatePassword = (password) => {
     const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    if (!/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{7,12}$/.test(password) && (password !== "")) {
+    if (
+      !/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{7,12}$/.test(
+        password
+      ) &&
+      password !== ""
+    ) {
       setErrors((prevErrors) => ({
         ...prevErrors,
         passwordError:
-          "Password must be between 7 and 12 characters, include at least one uppercase letter, one number, and one special character.",
+          "הסיסמה חייבת להיות בין 7 ל-12 תווים, לכלול לפחות אות אחת רישית, מספר אחד, ותו מיוחד אחד.",
       }));
     } else {
       setErrors((prevErrors) => ({
@@ -187,7 +197,7 @@ const EditDetails = ({ userData, editUser, mode }) => {
     if (currentUser && password === currentUser.password) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        passwordError: "Password is already in use.",
+        passwordError: "הסיסמה כבר בשימוש.",
       }));
     }
   };
@@ -196,7 +206,7 @@ const EditDetails = ({ userData, editUser, mode }) => {
     if (confirmPassword && confirmPassword !== password) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        confirmPasswordError: "Passwords do not match.",
+        confirmPasswordError: "הסיסמאות אינן תואמות.",
       }));
     } else {
       setErrors((prevErrors) => ({ ...prevErrors, confirmPasswordError: "" }));
@@ -211,11 +221,34 @@ const EditDetails = ({ userData, editUser, mode }) => {
     );
     setCitySuggestions(filteredCities);
     setFormData((prevData) => ({ ...prevData, city: value }));
+
+    const cityExists = citiesList.some(
+      (city) =>
+        city.english.toLowerCase() === value.toLowerCase() ||
+        city.hebrew === value
+    );
+
+
+    if (!cityExists) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        cityError: "העיר חייבת להיות עיר תקנית בישראל.",
+      }));
+    } else {
+      setErrors((prevErrors) => {
+        const { cityError, ...rest } = prevErrors;
+        return rest;
+      });
+    }
   };
 
   const handleCitySelect = (city) => {
     setFormData((prevData) => ({ ...prevData, city: city.english }));
     setCitySuggestions([]);
+    setErrors((prevErrors) => {
+      const { cityError, ...rest } = prevErrors; 
+      return rest;
+    });
   };
 
   const validateBirthDate = (dob) => {
@@ -224,14 +257,17 @@ const EditDetails = ({ userData, editUser, mode }) => {
     let age = today.getFullYear() - dobDate.getFullYear();
     const monthDifference = today.getMonth() - dobDate.getMonth();
 
-    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dobDate.getDate())) {
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < dobDate.getDate())
+    ) {
       age--;
     }
 
     if (age < 18 || age > 120) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        dobError: "Age must be between 18 and 120 years.",
+        dobError: "הגיל חייב להיות בין 18 ל-120 שנים.",
       }));
     } else {
       setErrors((prevErrors) => ({ ...prevErrors, dobError: "" }));
@@ -241,7 +277,8 @@ const EditDetails = ({ userData, editUser, mode }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
-      ((!errors.passwordError && !errors.confirmPasswordError)) &&
+      !errors.passwordError &&
+      !errors.confirmPasswordError &&
       !errors.dobError &&
       !errors.imageError &&
       !errors.numberError
@@ -250,7 +287,12 @@ const EditDetails = ({ userData, editUser, mode }) => {
     }
   };
 
-  const isFormValid = !errors.passwordError && !errors.confirmPasswordError && !errors.dobError && !errors.imageError && !errors.numberError;
+  const isFormValid =
+    !errors.passwordError &&
+    !errors.confirmPasswordError &&
+    !errors.dobError &&
+    !errors.imageError &&
+    !errors.numberError;
 
   return (
     <div>
@@ -286,7 +328,9 @@ const EditDetails = ({ userData, editUser, mode }) => {
             value={formData.firstName}
             onChange={handleChange}
           />
-          {errors.firstNameError && <div className="text-danger">{errors.firstNameError}</div>}
+          {errors.firstNameError && (
+            <div className="text-danger">{errors.firstNameError}</div>
+          )}
         </div>
 
         <div className="mb-3">
@@ -298,7 +342,9 @@ const EditDetails = ({ userData, editUser, mode }) => {
             value={formData.lastName}
             onChange={handleChange}
           />
-          {errors.lastNameError && <div className="text-danger">{errors.lastNameError}</div>}
+          {errors.lastNameError && (
+            <div className="text-danger">{errors.lastNameError}</div>
+          )}
         </div>
 
         <div className="mb-3">
@@ -321,32 +367,45 @@ const EditDetails = ({ userData, editUser, mode }) => {
             name="image"
             value={formData.image}
             onChange={handleChange}
-            className={errors.imageError ? 'error' : ''}
+            className={errors.imageError ? "error" : ""}
             placeholder="הכנס קישור לתמונה (JPG/JPEG)"
           />
 
-          {errors.imageError && <div className="text-danger">{errors.imageError}</div>}
-
-          {formData.image && !formData.image.startsWith("http") && !errors.imageError && (
-            <div>
-              <img
-                src={formData.image}
-                alt="Profile Preview"
-                style={{ width: "100px", height: "100px", borderRadius: "50%" }}
-              />
-            </div>
+          {errors.imageError && (
+            <div className="text-danger">{errors.imageError}</div>
           )}
 
-          {formData.image && formData.image.startsWith("http") && !errors.imageError && (
-            <div>
-              <img
-                src={formData.image}
-                alt="Profile Preview"
-                style={{ width: "100px", height: "100px", borderRadius: "50%" }}
-              />
-            </div>
-          )}
+          {formData.image &&
+            !formData.image.startsWith("http") &&
+            !errors.imageError && (
+              <div>
+                <img
+                  src={formData.image}
+                  alt="Profile Preview"
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    borderRadius: "50%",
+                  }}
+                />
+              </div>
+            )}
 
+          {formData.image &&
+            formData.image.startsWith("http") &&
+            !errors.imageError && (
+              <div>
+                <img
+                  src={formData.image}
+                  alt="תצוגה מקדימה של פרופיל"
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    borderRadius: "50%",
+                  }}
+                />
+              </div>
+            )}
         </div>
         <div className="mb-3">
           <label className="form-label">עיר</label>
@@ -356,7 +415,7 @@ const EditDetails = ({ userData, editUser, mode }) => {
             name="city"
             value={formData.city}
             onChange={handleChange}
-            placeholder="Enter your city"
+            placeholder="הכנס את עירך"
           />
           {citySuggestions.length > 0 && (
             <ul className="list-group">
@@ -371,6 +430,9 @@ const EditDetails = ({ userData, editUser, mode }) => {
               ))}
             </ul>
           )}
+          {errors.cityError && (
+            <div className="text-danger">{errors.cityError}</div>
+          )}
         </div>
 
         <div className="mb-3">
@@ -382,7 +444,9 @@ const EditDetails = ({ userData, editUser, mode }) => {
             value={formData.street}
             onChange={handleChange}
           />
-          {errors.streetError && <div className="text-danger mt-2">{errors.streetError}</div>}
+          {errors.streetError && (
+            <div className="text-danger mt-2">{errors.streetError}</div>
+          )}
         </div>
 
         <div className="mb-3">
@@ -394,7 +458,9 @@ const EditDetails = ({ userData, editUser, mode }) => {
             value={formData.number}
             onChange={handleChange}
           />
-          {errors.numberError && <div className="text-danger mt-2">{errors.numberError}</div>}
+          {errors.numberError && (
+            <div className="text-danger mt-2">{errors.numberError}</div>
+          )}
         </div>
 
         {mode === 1 && (
@@ -407,7 +473,9 @@ const EditDetails = ({ userData, editUser, mode }) => {
                 name="password"
                 onChange={handleChange}
               />
-              {errors.passwordError && <div className="text-danger">{errors.passwordError}</div>}
+              {errors.passwordError && (
+                <div className="text-danger">{errors.passwordError}</div>
+              )}
             </div>
 
             <div className="mb-3">
@@ -418,7 +486,9 @@ const EditDetails = ({ userData, editUser, mode }) => {
                 name="confirmPassword"
                 onChange={handleChange}
               />
-              {errors.confirmPasswordError && <div className="text-danger">{errors.confirmPasswordError}</div>}
+              {errors.confirmPasswordError && (
+                <div className="text-danger">{errors.confirmPasswordError}</div>
+              )}
             </div>
           </>
         )}
@@ -432,7 +502,9 @@ const EditDetails = ({ userData, editUser, mode }) => {
             value={formData.birthDate}
             onChange={handleChange}
           />
-          {errors.dobError && <div className="text-danger">{errors.dobError}</div>}
+          {errors.dobError && (
+            <div className="text-danger">{errors.dobError}</div>
+          )}
         </div>
 
         <button

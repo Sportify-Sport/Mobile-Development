@@ -89,7 +89,7 @@ const Register = () => {
     switch (name) {
       case 'username':
         if (!/^[a-zA-Z0-9!@#$%^&*]{1,60}$/.test(value)) {
-          newErrors.username = 'Must be alphanumeric or special characters (max 60).';
+          newErrors.username = 'חייב להיות אלפאנומרי או תווים מיוחדים (מקסימום 60).';
         } else {
           delete newErrors.username;
         }
@@ -98,7 +98,7 @@ const Register = () => {
       case 'password':
         if (!/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.])[A-Za-z\d@$!%*?&#.]{7,12}$/.test(value)) {
           newErrors.password =
-            'Must contain 7-12 chars, 1 special char, 1 uppercase letter, 1 number.';
+            'חייבת לכלול בין 7 ל-12 תווים, תו מיוחד אחד, אות רישית אחת, ומספר אחד.';
         } else {
           delete newErrors.password;
         }
@@ -106,7 +106,7 @@ const Register = () => {
 
       case 'confirmPassword':
         if (value !== formData.password) {
-          newErrors.confirmPassword = 'Passwords do not match.';
+          newErrors.confirmPassword = 'הסיסמאות אינן תואמות.';
         } else {
           delete newErrors.confirmPassword;
         }
@@ -114,7 +114,7 @@ const Register = () => {
 
       case 'image':
         if (value && !/\.(jpg|jpeg)$/.test(value.toLowerCase()) && !/^https?:\/\/.*\.(jpg|jpeg)$/.test(value)) {
-          newErrors.image = 'Only jpg or jpeg files are allowed, or provide a valid image URL.';
+          newErrors.image = 'מותר רק קבצי jpg או jpeg, או יש לספק כתובת URL של תמונה תקינה.';
         } else {
           delete newErrors.image;
         }
@@ -123,7 +123,7 @@ const Register = () => {
       case 'firstName':
       case 'lastName':
         if (!/^[a-zA-Z\u0590-\u05FF\s]+$/.test(value)) {
-          newErrors[name] = 'Only letters (English or Hebrew) are allowed.';
+          newErrors[name] = 'מותרות רק אותיות (אנגלית או עברית).';
         } else {
           delete newErrors[name];
         }
@@ -131,7 +131,7 @@ const Register = () => {
 
       case 'email':
         if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[cC][oO][mM]$/.test(value)) {
-          newErrors.email = 'Invalid email format. Must include "@" and end with ".com".';
+          newErrors.email = 'פורמט דוא"ל לא תקני. חייב לכלול "@" ולהסתיים ב ".com".';
         } else {
           delete newErrors.email;
         }
@@ -147,9 +147,9 @@ const Register = () => {
         }
 
         if (selectedDate >= today) {
-          newErrors.birthDate = 'Invalid date of birth.';
+          newErrors.birthDate = 'תאריך לידה לא תקני.';
         } else if (age < 18 || age >= 120) {
-          newErrors.birthDate = 'Invalid age. The user must be between 18 and 120 years old.';
+          newErrors.birthDate = 'גיל לא תקני. המשתמש חייב להיות בין 18 ל-120 שנים.';
         } else {
           delete newErrors.birthDate;
         }
@@ -160,7 +160,7 @@ const Register = () => {
           (city) => city.english.toLowerCase() === value.toLowerCase() || city.hebrew === value
         );
         if (!cityExists) {
-          newErrors.city = 'City must be a valid city in Israel.';
+          newErrors.city = 'העיר חייבת להיות עיר תקנית בישראל.';
         } else {
           delete newErrors.city;
         }
@@ -168,7 +168,7 @@ const Register = () => {
 
       case 'street':
         if (!/^[\u0590-\u05FF\s]+$/.test(value)) {
-          newErrors.street = 'Street name must be in Hebrew letters.';
+          newErrors.street = 'שם הרחוב חייב להיות באותיות עבריות.';
         } else {
           delete newErrors.street;
         }
@@ -176,7 +176,7 @@ const Register = () => {
 
       case 'number':
         if (!/^\d+$/.test(value) || value <= 0) {
-          newErrors.number = 'Must be a positive number.';
+          newErrors.number = 'חייב להיות מספר חיובי.';
         } else {
           delete newErrors.number;
         }
@@ -198,7 +198,7 @@ const Register = () => {
           const imageUrl = URL.createObjectURL(file);
           setFormData({ ...formData, image: imageUrl });
         } else {
-          alert('Please upload a valid image (jpg/jpeg).');
+          alert('אנא העלה תמונה תקינה (jpg/jpeg).');
           e.target.value = null;
         }
       }
@@ -225,7 +225,7 @@ const Register = () => {
     const hasErrors = Object.keys(errors).length > 0;
     const isEmptyField = Object.values(formData).some((value) => value === '');
     if (hasErrors || isEmptyField) {
-      alert('Please fix the errors and fill all fields.');
+      alert('אנא תקן את השגיאות ומלא את כל השדות.');
       return;
     }
 
@@ -235,12 +235,12 @@ const Register = () => {
     const usernameExists = users.some((user) => user.username === formData.username);
 
     if (emailExists) {
-      alert('Email already registered. Please use a different email.');
+      alert('הדוא"ל כבר רשום. אנא השתמש בדוא"ל אחר.');
       return;
     }
 
     if (usernameExists) {
-      alert('Username already taken. Please choose a different username.');
+      alert('שם המשתמש כבר תפוס. אנא בחר שם משתמש אחר.');
       return;
     }
 
@@ -250,7 +250,7 @@ const Register = () => {
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
 
-    alert('Registration successful!');
+    alert('ההרשמה בוצעה בהצלחה!');
     setIsRegistered(true);
 
     sessionStorage.setItem('currentUser', JSON.stringify(newUser));
@@ -260,7 +260,7 @@ const Register = () => {
 
   return (
     <div className="register-form">
-      <h2>User Information</h2>
+      <h2>מידע על משתמש</h2>
       {Object.keys(formData).map((key) => (
         <div key={key} className="form-group">
           <label>{key.replace(/([A-Z])/g, ' $1')}</label>
@@ -283,8 +283,8 @@ const Register = () => {
                 value={formData.image}
                 onChange={handleChange}
                 className={errors[key] ? 'error' : ''}
-                placeholder="Enter image URL"
-              />
+                placeholder="הכנס כתובת URL של תמונה"
+                />
             </div>
           ) : key === 'city' ? (
             <div>
@@ -294,8 +294,8 @@ const Register = () => {
                 value={formData.city}
                 onChange={handleChange}
                 className={errors[key] ? 'error' : ''}
-                placeholder="Enter your city"
-              />
+                placeholder="הכנס את עירך"
+                />
               {citySuggestions.length > 0 && (
                 <ul className="city-suggestions">
                   {citySuggestions.map((city, index) => (
@@ -319,15 +319,15 @@ const Register = () => {
               value={formData[key]}
               onChange={handleChange}
               className={errors[key] ? 'error' : ''}
-              placeholder={`Enter your ${key.replace(/([A-Z])/g, ' $1').toLowerCase()}`}
-            />
+              placeholder={`הכנס את ${key.replace(/([A-Z])/g, ' $1').toLowerCase()}`}
+              />
           )}
           {errors[key] && <span className="error-message">{errors[key]}</span>}
         </div>
       ))}
-      <button onClick={handleRegister}>Register</button>
-      <span>Already have a user?<a onClick={handleLoginClick} className="link"> log in!</a></span>
-    </div>
+      <button onClick={handleRegister}>הירשם</button>
+      <span>כבר יש לך משתמש? <a onClick={handleLoginClick} className="link">התחבר!</a></span>
+      </div>
   );
 };
 

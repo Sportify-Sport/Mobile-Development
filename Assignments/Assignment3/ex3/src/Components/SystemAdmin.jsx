@@ -30,7 +30,7 @@ const UserTable = () => {
       setEditUserData(userToEdit);
       setShowEditModal(true);
     } else {
-      alert("User not found.");
+      alert("המשתמש לא נמצא.");
     }
   };
 
@@ -41,7 +41,7 @@ const UserTable = () => {
     setUsers(updatedUsers);
     localStorage.setItem("users", JSON.stringify(updatedUsers));
     setShowEditModal(false);
-    alert("User details updated successfully!");
+    alert("הפרטים עודכנו בהצלחה!");
   };
 
   const getFilteredUserData = (user) => {
