@@ -61,35 +61,40 @@ const EditDetails = ({ userData, editUser, mode }) => {
         ...prevData,
         [name]: value,
       }));
+    }
+    if (name === "password") {
+      setPasswordInput(value);
+      validatePassword(value);
+    }
 
-      if (name === "password") {
-        setPasswordInput(value);
-        validatePassword(value);
-      }
+    if (name === "confirmPassword") {
+      validateConfirmPassword(value, formData.password);
+    }
+    if (name === "firstName") {
+      validateFirstName(value, formData.firstName);
+    }
+    if (name === "lastName") {
+      validateLastName(value, formData.lastName);
+    }
 
-      if (name === "confirmPassword") {
-        validateConfirmPassword(value, formData.password);
-      }
+    if (name === "birthDate") {
+      validateBirthDate(value);
+    }
 
-      if (name === "birthDate") {
-        validateBirthDate(value);
-      }
+    if (name === "city") {
+      handleCitySuggestions(value);
+    }
 
-      if (name === "city") {
-        handleCitySuggestions(value);
-      }
+    if (name === "number") {
+      validateNumber(value);
+    }
 
-      if (name === "number") {
-        validateNumber(value);
-      }
+    if (name === "street") {
+      validateStreet(value);
+    }
 
-      if (name === "street") {
-        validateStreet(value);
-      }
-
-      if (name === "image" && !e.target.files) {
-        validateImage(value);
-      }
+    if (name === "image" && !e.target.files) {
+      validateImage(value);
     }
   };
 
@@ -106,6 +111,36 @@ const EditDetails = ({ userData, editUser, mode }) => {
       }));
     }
   };
+
+  const validateFirstName = (value => {
+    if (!/^[a-zA-Z\u0590-\u05FF\s]+$/.test(value)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        firstNameError: "Only letters (English or Hebrew) are allowed.",
+      }));
+    }
+    else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        firstNameError: "",
+      }));
+    }
+  })
+
+  const validateLastName = (value => {
+    if (!/^[a-zA-Z\u0590-\u05FF\s]+$/.test(value)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        lastNameError: "Only letters (English or Hebrew) are allowed.",
+      }));
+    }
+    else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        lastNameError: "",
+      }));
+    }
+  })
 
   const validateNumber = (value) => {
     if (!/^[1-9]\d*$/.test(value)) {
@@ -240,6 +275,30 @@ const EditDetails = ({ userData, editUser, mode }) => {
             value={formData.email}
             readOnly
           />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">שם פרטי</label>
+          <input
+            type="text"
+            className="form-control"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+          />
+          {errors.firstNameError && <div className="text-danger">{errors.firstNameError}</div>}
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">שם משפחה</label>
+          <input
+            type="text"
+            className="form-control"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+          />
+          {errors.lastNameError && <div className="text-danger">{errors.lastNameError}</div>}
         </div>
 
         <div className="mb-3">
