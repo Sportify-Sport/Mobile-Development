@@ -48,8 +48,7 @@ function Profile(props) {
   const handleEditUser = (updatedData, counter) => {
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const user = users.find((user) => user.email === updatedData.email);
-  
-    if (counter === 1) {
+    if (counter) {
       if (updatedData.password.trim() === "") {
         updatedData.password = user.password; 
       } else if (user.password === updatedData.password) {
@@ -149,7 +148,6 @@ function Profile(props) {
 
       {profileData.username === "admin" && <UserTable />}
 
-      {/* Password Verification Modal */}
       {showPasswordModal && (
         <div
           className="modal fade show"
@@ -227,4 +225,3 @@ function Profile(props) {
 }
 
 export default Profile;
-
