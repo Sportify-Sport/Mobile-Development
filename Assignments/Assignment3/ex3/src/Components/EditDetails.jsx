@@ -11,6 +11,9 @@ const EditDetails = ({ userData, editUser, mode }) => {
     dobError: "",
     imageError: "",
     cityError: "",
+    firstNameError:"" ,
+    lastNameError: "" ,
+    streetError: ""
   });
   const [citySuggestions, setCitySuggestions] = useState([]);
 
@@ -281,7 +284,11 @@ const EditDetails = ({ userData, editUser, mode }) => {
       !errors.confirmPasswordError &&
       !errors.dobError &&
       !errors.imageError &&
-      !errors.numberError
+      !errors.numberError &&
+      !errors.cityError &&
+      !errors.firstNameError &&
+      !errors.lastNameError &&
+      !errors.streetError
     ) {
       editUser(formData, counter);
     }
@@ -292,7 +299,11 @@ const EditDetails = ({ userData, editUser, mode }) => {
     !errors.confirmPasswordError &&
     !errors.dobError &&
     !errors.imageError &&
-    !errors.numberError;
+    !errors.numberError &&
+    !errors.cityError &&
+    !errors.firstNameError &&
+    !errors.lastNameError &&
+    !errors.streetError;
 
   return (
     <div>
