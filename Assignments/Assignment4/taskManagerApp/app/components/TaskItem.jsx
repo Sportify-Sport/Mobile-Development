@@ -1,63 +1,33 @@
-// // components/TaskItem.jsx
-// import React from 'react';
-// import { View, Text, TouchableOpacity, Button, StyleSheet } from 'react-native';
-
-// const TaskItem = ({ task, onPress, onDelete }) => {
-//   return (
-//     <View style={styles.itemContainer}>
-//       <TouchableOpacity onPress={onPress} style={styles.item}>
-//         <Text style={[styles.title, task.completed && styles.completed]}>
-//           {task.title}
-//         </Text>
-//       </TouchableOpacity>
-//       <Button title="Delete" onPress={onDelete} color="#ff5c5c" />
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   itemContainer: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//     padding: 15,
-//     backgroundColor: '#f2f2f2',
-//     marginBottom: 10,
-//     borderRadius: 5,
-//   },
-//   item: {
-//     flex: 1,
-//   },
-//   title: {
-//     fontSize: 18,
-//   },
-//   completed: {
-//     textDecorationLine: 'line-through',
-//     color: 'green',
-//   },
-// });
-
-// export default TaskItem;
-
-
-
-// components/TaskItem.jsx
-// import React from 'react';
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Button, StyleSheet } from 'react-native';
-import Checkbox from 'react-native-community-checkbox';
-const TaskItem = ({ task, onPress, onDelete }) => {
-  const [isChecked, setChecked] = React.useState(false);
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+
+const TaskItem = ({ task, onPress, onDelete, onCheck }) => {
+  const [isChecked, setIsChecked] = useState(task.completed); // Initial state based on task.completed
+
+  const handleCheck = () => {
+    const updatedStatus = !isChecked; // Toggle status
+    setIsChecked(updatedStatus); // Update local state
+    const updatedTask = { ...task, completed: updatedStatus }; // Create updated task object
+    onCheck(updatedTask); // Notify parent component to update the task list
+  };
+
   return (
     <View style={styles.itemContainer}>
       <TouchableOpacity onPress={onPress} style={styles.item}>
         <Text style={[styles.title, task.completed && styles.completed]}>
-          {task.title}
+          {task.name}
         </Text>
       </TouchableOpacity>
-      <Text> Check {isChecked ? '👍' : '👎'}</Text>
-         <Checkbox isChecked={isChecked} setChecked={setChecked} />
-      <Button title="Delete" onPress={onDelete} color="#ff5c5c" />
+
+      {/* Use a button to toggle task completion */}
+      <TouchableOpacity onPress={handleCheck} style={styles.statusButton}>
+        <Text style={styles.statusText}>{isChecked ? '✅' : '❎'}</Text>
+      </TouchableOpacity>
+
+      {/* Delete button with confirmation */}
+      <TouchableOpacity onPress={onDelete} style={styles.deleteButton}>
+        <Text style={styles.deleteText}>❌</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -65,12 +35,14 @@ const TaskItem = ({ task, onPress, onDelete }) => {
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 15,
-    backgroundColor: '#f2f2f2',
-    marginBottom: 10,
+    justifyContent: 'space-between',
+    padding: 10,
+    marginVertical: 5,
+    backgroundColor: '#f9f9f9',
     borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
   item: {
     flex: 1,
@@ -80,7 +52,20 @@ const styles = StyleSheet.create({
   },
   completed: {
     textDecorationLine: 'line-through',
-    color: 'green',
+    color: 'gray',
+  },
+  statusButton: {
+    paddingHorizontal: 10,
+  },
+  statusText: {
+    fontSize: 18,
+  },
+  deleteButton: {
+    paddingHorizontal: 10,
+  },
+  deleteText: {
+    fontSize: 18,
+    color: 'red',
   },
 });
 
