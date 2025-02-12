@@ -1,29 +1,23 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
 
-const DetailScreen = () => {
-  const { task } = useLocalSearchParams();
-
-  // Parse the task object from the JSON string
-  const parsedTask = JSON.parse(task);
+const DetailScreen = ({ route }) => {
+  const { task } = route.params; // Receive task data passed from ListScreen
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Task Details</Text>
       <View style={styles.detailsContainer}>
         <Text style={styles.label}>Title:</Text>
-        <Text style={styles.value}>{parsedTask.title}</Text>
+        <Text style={styles.value}>{task.name}</Text>
       </View>
       <View style={styles.detailsContainer}>
         <Text style={styles.label}>Description:</Text>
-        <Text style={styles.value}>{parsedTask.description}</Text>
+        <Text style={styles.value}>{task.description}</Text>
       </View>
       <View style={styles.detailsContainer}>
         <Text style={styles.label}>Status:</Text>
-        <Text style={styles.value}>
-          {parsedTask.completed ? 'Completed' : 'Not Completed'}
-        </Text>
+        <Text style={styles.value}>{task.completed ? 'Completed' : 'Not Completed'}</Text>
       </View>
     </View>
   );

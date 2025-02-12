@@ -1,34 +1,56 @@
-// // screens/ListScreen.js
-// import React, { useState, useEffect } from 'react';
-// import { View, FlatList, Text, StyleSheet } from 'react-native';
+// import React, { useState } from 'react';
+// import { View, FlatList, Text, StyleSheet, Alert } from 'react-native';
 // import TaskItem from '../components/TaskItem';
 
-// export default function ListScreen({ navigation }) {
-//   // Static sample tasks—for now.
-//   const [tasks, setTasks] = useState([
-//     { id: '1', title: 'Sample Task 1', description: 'Details for task 1', completed: false },
-//     { id: '2', title: 'Sample Task 2', description: 'Details for task 2', completed: false },
-//   ]);
+// export default function ListScreen({ route, navigation }) {
+//   const { tasks: initialTasks, updateTasks } = route.params; // Get tasks and updateTasks function from HomeScreen
+//   const [tasks, setTasks] = useState(initialTasks); // Local state for tasks array
 
-//   // Function to delete a task by filtering it out.
-//   const deleteTask = (id) => {
-//     setTasks((currentTasks) => currentTasks.filter(task => task.id !== id));
+// const deleteTask = (id) => {
+//   console.log(`Delete task triggered for ID: ${id}`);
+//   confirmDelete(id);
+//     // Alert.alert(
+//     //   'Confirm Delete',
+//     //   'Are you sure you want to delete this task?',
+//     //   [
+//     //     { text: 'Cancel', style: 'cancel' },
+//     //     { text: 'OK', onPress: () => confirmDelete(id) },
+//     //   ],
+//     //   { cancelable: true }
+//     // );
+// };
+
+//   const confirmDelete = (id) => {
+//     const updatedTasks = tasks.filter((task) => task.id !== id); // Remove task by id
+//     setTasks(updatedTasks); // Update local state
+//     updateTasks(updatedTasks); // Update tasks in the parent (HomeScreen)
+//   };
+
+//   // Function to handle task completion toggle
+//   const handleTaskCheck = (updatedTask) => {
+//     const updatedTasks = tasks.map((task) =>
+//       task.id === updatedTask.id ? updatedTask : task
+//     );
+//     setTasks(updatedTasks); // Update local state with updated task status
+//     updateTasks(updatedTasks); // Notify parent to update task list
 //   };
 
 //   // Render each task item using the TaskItem component.
 //   const renderItem = ({ item }) => (
 //     <TaskItem
 //       task={item}
-//       onPress={() => navigation.navigate('./screens/DetailScreen', { task: item })}
-//       onDelete={() => deleteTask(item.id)}
+//       onPress={() => console.log(`Task clicked: ${item.name}`)} // Placeholder for navigation
+//       onDelete={() => deleteTask(item.id)} // Pass delete function to TaskItem
+//       onCheck={handleTaskCheck} // Pass onCheck handler to TaskItem
 //     />
 //   );
 
 //   return (
 //     <View style={styles.container}>
-//       <FlatList 
+//       <Text style={styles.title}>Task List</Text>
+//       <FlatList
 //         data={tasks}
-//         keyExtractor={(item) => item.id}
+//         keyExtractor={(item) => item.id.toString()}
 //         renderItem={renderItem}
 //         ListEmptyComponent={<Text style={styles.emptyText}>No tasks available.</Text>}
 //       />
@@ -38,56 +60,61 @@
 
 // const styles = StyleSheet.create({
 //   container: { flex: 1, padding: 20 },
-//   emptyText: {
-//     textAlign: 'center',
-//     fontSize: 18,
-//     marginTop: 20,
-//   },
+//   title: { fontSize: 22, fontWeight: 'bold', marginBottom: 10, textAlign: 'center' },
+//   emptyText: { textAlign: 'center', fontSize: 18, marginTop: 20 },
 // });
 
-
 import React, { useState } from 'react';
-import { View, FlatList, Text, StyleSheet } from 'react-native';
+import { View, FlatList, Text, StyleSheet, Alert } from 'react-native';
 import TaskItem from '../components/TaskItem';
-import { useRouter } from 'expo-router'; // Import useRouter from expo-router
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 
-export default function ListScreen() {
-  const router = useRouter(); // Initialize the router
+export default function ListScreen({ route, navigation }) {
+  const { tasks: initialTasks, updateTasks } = route.params; // Get tasks and updateTasks function from HomeScreen
+  const [tasks, setTasks] = useState(initialTasks); // Local state for tasks array
+  const nav = useNavigation(); // Initialize navigation object using useNavigation hook
 
-  // Static sample tasks—for now.
-  const [tasks, setTasks] = useState([
-    { id: '1', title: 'Sample Task 1', description: 'Details for task 1', completed: false },
-    { id: '2', title: 'Sample Task 2', description: 'Details for task 2', completed: false },
-  ]);
-
-  // Function to delete a task by filtering it out.
   const deleteTask = (id) => {
-    setTasks((currentTasks) => currentTasks.filter(task => task.id !== id));
+    console.log(`Delete task triggered for ID: ${id}`);
+    confirmDelete(id);
   };
 
-  const checkEndTask = (id) => {
-    setTasks((currentTasks) =>
-      currentTasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
+  const confirmDelete = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id); // Remove task by id
+    setTasks(updatedTasks); // Update local state
+    updateTasks(updatedTasks); // Update tasks in the parent (HomeScreen)
+  };
+
+  // Function to handle task completion toggle
+  const handleTaskCheck = (updatedTask) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === updatedTask.id ? updatedTask : task
     );
+    setTasks(updatedTasks); // Update local state with updated task status
+    updateTasks(updatedTasks); // Notify parent to update task list
+  };
+
+  // Navigate to DetailScreen when task is clicked
+  const handleTaskPress = (task) => {
+    nav.navigate('Detail', { task }); // Navigate to DetailScreen and pass task data as parameter
   };
 
   // Render each task item using the TaskItem component.
   const renderItem = ({ item }) => (
     <TaskItem
       task={item}
-       onPress={() => router.navigate({ pathname: './DetailScreen', params: { task: JSON.stringify(item) } })}
-      onDelete={() => deleteTask(item.id)}
-      onToggleComplete={() => checkEndTask(item.id)}
+      onPress={() => handleTaskPress(item)} // Use handleTaskPress to navigate to DetailScreen
+      onDelete={() => deleteTask(item.id)} // Pass delete function to TaskItem
+      onCheck={handleTaskCheck} // Pass onCheck handler to TaskItem
     />
   );
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Task List</Text>
       <FlatList
         data={tasks}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         ListEmptyComponent={<Text style={styles.emptyText}>No tasks available.</Text>}
       />
@@ -97,9 +124,6 @@ export default function ListScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20 },
-  emptyText: {
-    textAlign: 'center',
-    fontSize: 18,
-    marginTop: 20,
-  },
+  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 10, textAlign: 'center' },
+  emptyText: { textAlign: 'center', fontSize: 18, marginTop: 20 },
 });
