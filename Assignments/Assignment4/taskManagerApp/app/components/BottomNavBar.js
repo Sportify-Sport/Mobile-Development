@@ -61,63 +61,39 @@
 
 // components/BottomNavBar.js
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { FontAwesome } from '@expo/vector-icons';
+import HomeScreen from '../screens/HomeScreen';
+import ListScreen from '../screens/ListScreen';
+import SearchScreen from '../screens/SearchScreen';
 
-const BottomNavBar = ({ navigation }) => {
+const Tab = createBottomTabNavigator();
+
+export default function BottomNavBar() {
   return (
-    <View style={styles.container}>
-      {/* Home Button */}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Home')}
-      >
-        <Ionicons name="home-outline" size={24} color="#000" />
-        <Text style={styles.buttonText}>Home</Text>
-      </TouchableOpacity>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
 
-      {/* Search Button */}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('Search')} // Navigate to Search screen
-      >
-        <Ionicons name="search-outline" size={24} color="#000" />
-        <Text style={styles.buttonText}>Search</Text>
-      </TouchableOpacity>
+          if (route.name === 'Home') {
+            iconName = 'home';
+          } else if (route.name === 'Search') {
+            iconName = 'search';
+          } else if (route.name === 'List') {
+            iconName = 'list';
+          }
 
-      {/* List Button */}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('List')} // Navigate to List screen
-      >
-        <Ionicons name="list-outline" size={24} color="#000" />
-        <Text style={styles.buttonText}>List</Text>
-      </TouchableOpacity>
-    </View>
+          // You can return any component that you like here!
+          return <FontAwesome name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'purple',
+        tabBarInactiveTintColor: 'gray',
+      })}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Search" component={SearchScreen} />
+      <Tab.Screen name="List" component={ListScreen} />
+    </Tab.Navigator>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: '#f8f8f8',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-    paddingVertical: 10,
-    position: 'absolute', // Position the bar at the bottom
-    bottom: 0, // Stick to the bottom
-    left: 0,
-    right: 0,
-  },
-  button: {
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 12,
-    marginTop: 5,
-  },
-});
-
-export default BottomNavBar;
+}
