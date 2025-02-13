@@ -134,12 +134,20 @@ export default function HomeScreen({ navigation }) {
       <Text style={styles.title}>Task Manager</Text>
       <Text>You have {tasks.length} tasks.</Text>
 
-      <Button
+      {/* <Button
         title="View Tasks"
         onPress={() =>
           navigation.navigate('List', { tasks, updateTasks }) // Pass tasks and the update function to ListScreen
         }
+      /> */}
+
+      <Button
+        title="View Tasks"
+        onPress={() =>
+          navigation.navigate('List', { tasks: tasks || [], updateTasks }) // Ensure tasks is at least an empty array
+        }
       />
+
     </View>
   );
 }
