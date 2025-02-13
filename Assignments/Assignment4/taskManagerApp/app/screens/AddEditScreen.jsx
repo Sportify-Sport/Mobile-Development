@@ -1,178 +1,55 @@
-// import React, { useState } from 'react';
-// import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-
-// export default function AddEditScreen({ route, navigation }) {
-//   const { tasks, updateTasks, setTasks } = route.params; // Get tasks and updateTasks function from ListScreen
-//   const [title, setTitle] = useState('');
-//   const [description, setDescription] = useState('');
-
-//   const handleAddTask = () => {
-//     if (title.trim() === '') {
-//       Alert.alert('Error', 'Please enter a title for the task.');
-//       return;
-//     }
-
-//     const newTask = {
-//       id: Date.now().toString(), // Generate a unique ID
-//       name: title,
-//       description: description,
-//       completed: false,
-//     };
-
-//     const updatedTasks = [...tasks, newTask]; // Add the new task to the list
-//     updateTasks(updatedTasks); // Update the tasks in the parent (HomeScreen)
-//     navigation.goBack(); // Go back to the ListScreen
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.title}>Add New Task</Text>
-
-//       <TextInput
-//         style={styles.input}
-//         placeholder="Title"
-//         value={title}
-//         onChangeText={setTitle}
-//       />
-
-//       <TextInput
-//         style={[styles.input, styles.descriptionInput]}
-//         placeholder="Description"
-//         value={description}
-//         onChangeText={setDescription}
-//         multiline
-//       />
-
-//       <Button title="Save" onPress={handleAddTask} />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: { flex: 1, padding: 20 },
-//   title: { fontSize: 22, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
-//   input: {
-//     borderWidth: 1,
-//     borderColor: '#ccc',
-//     borderRadius: 5,
-//     padding: 10,
-//     marginBottom: 15,
-//   },
-//   descriptionInput: {
-//     height: 100,
-//   },
-// });
-
-
-
-
-// import React, { useState } from 'react';
-// import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
-
-// export default function AddEditScreen({ route, navigation }) {
-//   const { tasks, updateTasks, initialTasks } = route.params; // Get tasks and updateTasks function from ListScreen
-//   const [title, setTitle] = useState('');
-//   const [description, setDescription] = useState('');
-
-//   const handleAddTask = () => {
-//     if (title.trim() === '') {
-//       Alert.alert('Error', 'Please enter a title for the task.');
-//       return;
-//     }
-
-//     const newTask = {
-//       id: Date.now().toString(), // Generate a unique ID
-//       name: title,
-//       description: description,
-//       completed: false,
-//     };
-
-//     const updatedTasks = [...tasks, newTask]; // Add the new task to the list
-//     updateTasks(updatedTasks); // Update the tasks in the parent (ListScreen)
-//      navigation.goBack('List', { tasks: updatedTasks, updateTasks }); // Go back to the ListScreen
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.title}>Add New Task</Text>
-
-//       <TextInput
-//         style={styles.input}
-//         placeholder="Title"
-//         value={title}
-//         onChangeText={setTitle}
-//       />
-
-//       <TextInput
-//         style={[styles.input, styles.descriptionInput]}
-//         placeholder="Description"
-//         value={description}
-//         onChangeText={setDescription}
-//         multiline
-//       />
-
-//       <Button title="Save" onPress={handleAddTask} />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: { flex: 1, padding: 20 },
-//   title: { fontSize: 22, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
-//   input: {
-//     borderWidth: 1,
-//     borderColor: '#ccc',
-//     borderRadius: 5,
-//     padding: 10,
-//     marginBottom: 15,
-//   },
-//   descriptionInput: {
-//     height: 100,
-//   },
-// });
-
-
-
-import React, { useState, useEffect } from 'react';
+// AddEditScreen.js
+import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { saveTasks } from '../components/storage'; // Import the saveTasks function
 
 export default function AddEditScreen({ route, navigation }) {
-  const { task: existingTask, tasks, updateTasks } = route.params; // Get task, tasks, and updateTasks function
+  // Extract parameters from route
+  const { tasks, setTasks, task: existingTask, updateTask } = route.params;
+
+  // State for title and description
   const [title, setTitle] = useState(existingTask ? existingTask.name : '');
   const [description, setDescription] = useState(existingTask ? existingTask.description : '');
 
+  // Function to handle saving the task
   const handleSaveTask = () => {
     if (title.trim() === '') {
       Alert.alert('Error', 'Please enter a title for the task.');
       return;
     }
 
-    const newTask = {
-      id: existingTask ? existingTask.id : Date.now().toString(), // Use existing ID if editing
-      name: title,
-      description: description,
-      completed: existingTask ? existingTask.completed : false, // Preserve completion status if editing
-    };
+    let updatedTask;
 
-    let updatedTasks;
     if (existingTask) {
       // Edit existing task
-      updatedTasks = tasks.map((task) => (task.id === existingTask.id ? newTask : task));
+      updatedTask = { ...existingTask, name: title, description: description };
+      const updatedTasks = tasks.map((t) => (t.id === existingTask.id ? updatedTask : t));
+      setTasks(updatedTasks); // Update tasks in the parent (ListScreen)
+      saveTasks(updatedTasks); // Save tasks to AsyncStorage
+      if (updateTask) {
+        updateTask(updatedTask); // Update task in DetailScreen
+      }
     } else {
       // Add new task
-      updatedTasks = [...tasks, newTask];
+      updatedTask = {
+        id: Date.now().toString(), // Generate a unique ID
+        name: title,
+        description: description,
+        completed: false,
+      };
+      const updatedTasks = [...tasks, updatedTask];
+      setTasks(updatedTasks); // Update tasks in the parent (ListScreen)
+      saveTasks(updatedTasks); // Save tasks to AsyncStorage
     }
 
-    updateTasks(updatedTasks); // Update the tasks in the parent (HomeScreen)
-
-    // Navigate back to the previous screen
-    navigation.goBack();
+    navigation.goBack(); // Navigate back to the previous screen
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{existingTask ? 'Edit Task' : 'Add New Task'}</Text>
 
+      {/* Input for task title */}
       <TextInput
         style={styles.input}
         placeholder="Title"
@@ -180,6 +57,7 @@ export default function AddEditScreen({ route, navigation }) {
         onChangeText={setTitle}
       />
 
+      {/* Input for task description */}
       <TextInput
         style={[styles.input, styles.descriptionInput]}
         placeholder="Description"
@@ -188,24 +66,34 @@ export default function AddEditScreen({ route, navigation }) {
         multiline
       />
 
-      <Button title={existingTask ? 'Save Changes' : 'Save'} onPress={handleSaveTask} />
+      {/* Save button */}
+      <Button title="Save" onPress={handleSaveTask} />
     </View>
   );
-}
+};
 
+// Styles for the component
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
     marginBottom: 15,
+    backgroundColor: '#fff',
   },
   descriptionInput: {
     height: 100,
   },
 });
-
-

@@ -4,6 +4,7 @@ import HomeScreen from '../screens/HomeScreen';
 import ListScreen from '../screens/ListScreen';
 import DetailScreen from '../screens/DetailScreen';
 import AddEditScreen from '../screens/AddEditScreen';
+import BottomNavBar from '../components/BottomNavBar';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,3 +18,6 @@ export default function StackNavigator() {
     </Stack.Navigator>
   );
 }
+
+
+
